@@ -1,44 +1,54 @@
 #include<LPC21xx.h>
 
 void delay(void);
-void serial(void);
+void configure_baudrate (unsigned int baud, float clock){
 
+}
+
+
+void configure_data_width (unsigned int width){
+
+}
+
+
+int configure_stop_bit (int sb){
+
+}
+
+int configure_parity (int parity){
+
+}
+
+
+int transmit_data (unsigned char data){
+
+}
+
+
+char receive_data (void){
+
+}
 unsigned char mg;
 
 int main()
 {
-  unsigned int i;
-  unsigned char msg[]={"BVB"};		
-  serial();
- 
-   while(1)
-  {
-   for(i=0;i<3;i++)
-    {
-	while(!(U0LSR & 0x20));		
-        U0THR = msg[i];
-    }
-   while(!(U0LSR & 0x01));
-
-   mg=U0RBR;
-   U0THR=mg;
+  unsigned char msg[]={"A"};		
   
+  configure_data_width(8);
 
-  delay();
-  }
+  configure_baudrate(19200,1.8432);
+
+  configure_stop_bit(2);
+
+  configure_parity(0);
+
+  transmit_data (msg);
+
+  receive_data();
+
+  printf("Received data is %c",data);
 
 }
-
-void serial()
-{
-  PINSEL0 = 0x00000005; 			
-  U0LCR = 0x83; 					
-  U0DLL = 0x61; 					
-  U0LCR = 0x03; 					
-  U0IER = 0x01;						
-}
-
-
 
 void delay()
 {
